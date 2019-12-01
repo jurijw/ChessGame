@@ -117,5 +117,20 @@ namespace Chess
                 Console.Write(Environment.NewLine);
             }
         }
+
+        // Function that takes in an x and y coordinate and returns whether the piece on that square is black or white or empty
+        // Returns 1 for white piece, -1 for a black piece, and 0 for an empty square
+        public int IsWhiteBlackOrEmpty(int x, int y)
+        {
+            var pieceId = BoardConfiguration[y, x];
+
+            if (pieceId == 0)
+                return 0;
+            if (pieceId % 2 == 0)
+                return 1;
+            else
+                return -1;
+        }
+        
     }
 }

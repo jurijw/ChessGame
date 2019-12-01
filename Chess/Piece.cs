@@ -38,7 +38,7 @@ namespace Chess
         }
 
         // Abstract methods
-        public abstract void ValidMoves(Board board);
+        public abstract List<List<int>> ValidMoves(Board board);
         public abstract void SelectPiece();
         public abstract void DrawPiece(); 
     }
