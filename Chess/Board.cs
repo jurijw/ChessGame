@@ -103,6 +103,8 @@ namespace Chess
             {
                 BoardConfiguration[piece.Y, piece.X] = piece.Id;
             }
+
+            // FIX: throw an exception if any two pieces have the same coordinates
         }
 
         public void Show()
@@ -122,14 +124,61 @@ namespace Chess
         // Returns 1 for white piece, -1 for a black piece, and 0 for an empty square
         public int IsWhiteBlackOrEmpty(int x, int y)
         {
-            var pieceId = BoardConfiguration[y, x];
-
-            if (pieceId == 0)
-                return 0;
-            if (pieceId % 2 == 0)
-                return 1;
+            // If requested square is off the board throw an exception
+            if (x < 0 || x >= 8 || y < 0 || y >= 8)
+                throw new InvalidOperationException("Square is off the board.");
             else
-                return -1;
+            {
+                var pieceId = BoardConfiguration[y, x];
+
+                if (pieceId == 0)
+                    return 0;
+                if (pieceId % 2 == 0)
+                    return 1;
+                else
+                    return -1;
+            }
+        }
+
+        // Returns true if a square in a board configuration is empty
+        public bool IsEmpty(int x, int y)
+        {
+            // If requested square is off the board throw an exception
+            if (x < 0 || x >= 8 || y < 0 || y >= 8)
+                throw new InvalidOperationException("Square is off the board.");
+            else
+                return BoardConfiguration[y, x] == 0;
+        }
+
+        // Takes a piece and a square in a board object and returns true if the square is occupied by an opposite colored piece
+        public bool OccupiedByDifferentColor(int x, int y, Piece piece)
+        {
+            // If requested square is off the board throw an exception
+            if (x < 0 || x >= 8 || y < 0 || y >= 8)
+                throw new InvalidOperationException("Square is off the board.");
+            else
+            {
+                // If pieces are same color
+                if ((piece.IsWhite && IsWhiteBlackOrEmpty(x, y) == 1) ||
+                    (!piece.IsWhite && IsWhiteBlackOrEmpty(x, y) == -1))
+                {
+                    return false;
+                }
+
+                // If pieces are different color
+                if ((piece.IsWhite && IsWhiteBlackOrEmpty(x, y) == -1) ||
+                    (!piece.IsWhite && IsWhiteBlackOrEmpty(x, y) == 1))
+                {
+                    return true;
+                }
+
+                // If square is empty throw an exception
+                else
+                {
+                    throw new InvalidOperationException("The square in question is empty. No comparison can be made.");
+                }
+            }
+            
         }
         
     }

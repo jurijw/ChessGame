@@ -9,18 +9,12 @@ namespace Chess
     {
         private List<List<int>> _rookRange = new List<List<int>>();
 
-        //private List<List<int>> _testRookRange = new List<List<int>>();
-
         public Rook(int x, int y, bool isWhite) : base(x, y, isWhite)
         {
             if (!IsWhite)
                 Id = 3;
             else
                 Id = 4;
-
-            //_testRookRange.Add(item: new List<int> {1, 3});
-            //Console.WriteLine($"{_testRookRange[0][0]}, {_testRookRange[0][1]}");
-
         }
 
         // Returns a 2 dimensional list of the legal moves the rook can move given the current board configuration
@@ -29,6 +23,76 @@ namespace Chess
 
             // Fix: Lots of repeated code --> can be simplified!!!
 
+            // Check all squares to the right of the rook.
+            for (int x = X + 1; x < 8; x++)
+            {
+                // Square is empty and rook can move to it regardless of color
+                if (board.IsEmpty(x, Y))
+                    _rookRange.Add(new List<int>() { Y, x });
+                // Is square is occupied by a piece of different color the rook can move to that square but no square behind it
+                else if (board.OccupiedByDifferentColor(x, Y, this))
+                {
+                    _rookRange.Add(new List<int>() { Y, x });
+                    break;
+                }
+                // If square is occupied by a piece of the same color the rook cannot move to that square or any behind it
+                else
+                    break;
+            }
+
+
+            // Check all squares to the left of the rook
+            for (int x = X - 1; x >= 0; x--)
+            {
+                // Square is empty and rook can move to it regardless of color
+                if (board.IsEmpty(x, Y))
+                    _rookRange.Add(new List<int>() { Y, x });
+                // Is square is occupied by a piece of different color the rook can move to that square but no square behind it
+                else if (board.OccupiedByDifferentColor(x, Y, this))
+                {
+                    _rookRange.Add(new List<int>() { Y, x });
+                    break;
+                }
+                // If square is occupied by a piece of the same color the rook cannot move to that square or any behind it
+                else
+                    break;
+            }
+
+            // Check all squares under rook
+            for (int y = Y + 1; y < 8; y++)
+            {
+                // Square is empty and rook can move to it regardless of color
+                if (board.IsEmpty(X, y))
+                    _rookRange.Add(new List<int>() { y, X });
+                // Is square is occupied by a piece of different color the rook can move to that square but no square behind it
+                else if (board.OccupiedByDifferentColor(X, y, this))
+                {
+                    _rookRange.Add(new List<int>() { y, X });
+                    break;
+                }
+                // If square is occupied by a piece of the same color the rook cannot move to that square or any behind it
+                else
+                    break;
+            }
+
+            // Check all squares above rook
+            for (int y = Y - 1; y >= 0; y--)
+            {
+                // Square is empty and rook can move to it regardless of color
+                if (board.IsEmpty(X, y))
+                    _rookRange.Add(new List<int>() { y, X });
+                // Is square is occupied by a piece of different color the rook can move to that square but no square behind it
+                else if (board.OccupiedByDifferentColor(X, y, this))
+                {
+                    _rookRange.Add(new List<int>() { y, X });
+                    break;
+                }
+                // If square is occupied by a piece of the same color the rook cannot move to that square or any behind it
+                else
+                    break;
+            }
+
+            /*
             // Check all squares to the right of the rook.
             for (int x = X + 1; x < 8; x++)
             {
@@ -102,7 +166,7 @@ namespace Chess
                 _rookRange.Add(new List<int>() {y, X});
 
             }
-
+            */
             return _rookRange;
 
         }
