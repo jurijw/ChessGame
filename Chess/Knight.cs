@@ -42,7 +42,7 @@ namespace Chess
                     if (board.IsEmpty(newX, newY))
                         _knightRange.Add(new List<int>() { newY, newX });
                     // If square is occupied by opposite colored piece
-                    if (board.OccupiedByDifferentColor(newX, newY, this))
+                    else if (board.OccupiedByDifferentColor(newX, newY, this))
                         _knightRange.Add(new List<int>() { newY, newX });
                     // If square is occupied by same colored piece, knight cannot move there
                 }
