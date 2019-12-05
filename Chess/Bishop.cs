@@ -35,7 +35,7 @@ namespace Chess
                     // Bishop can move to a square of an opposite colored piece but not any farther
                     if (board.OccupiedByDifferentColor(X + i, Y + i, this))
                     {
-                        _bishopRange.Add(new List<int>() {Y + i, X + i});
+                        _bishopRange.Add(new List<int>() { Y + i, X + i });
                         break;
                     }
                     // Bishop cannot move past pieces of the same color
@@ -49,8 +49,6 @@ namespace Chess
                 {
                     if (e.Message == "Square is off the board.")
                         break;
-                    //if (e.Message != "The square in question is empty. No comparisons can be made.")
-                    //   continue;
                 }
 
                 
@@ -69,7 +67,7 @@ namespace Chess
                     // Bishop can move to a square of an opposite colored piece but not any farther
                     if (board.OccupiedByDifferentColor(X + i, Y + i, this))
                     {
-                        _bishopRange.Add(new List<int>() {Y + i, X + i});
+                        _bishopRange.Add(new List<int>() { Y + i, X + i });
                         break;
                     }
                     // Bishop cannot move past pieces of the same color
