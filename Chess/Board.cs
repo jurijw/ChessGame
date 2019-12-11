@@ -107,6 +107,61 @@ namespace Chess
             // FIX: throw an exception if any two pieces have the same coordinates
         }
 
+        private Piece PieceFromId(int x, int y, int id)
+        {
+            
+            switch (id)
+            {
+                case 0: // Empty
+                    return new Empty(x, y);
+                case 1: // Black pawn
+                    return new Prawn(x, y, false);
+                case 2: // White pawn
+                    return new Prawn(x, y, true);
+                case 3: // Black rook
+                    return new Rook(x, y, false);
+                case 4: // White rook
+                    return new Rook(x, y, true);
+                case 5: // Black knight
+                    return new Knight(x, y, false);
+                case 6: // White knight
+                    return new Knight(x, y, true);
+                case 7: // Black bishop
+                    return new Bishop(x, y, false);
+                case 8: // White bishop
+                    return new Bishop(x, y, true);
+                case 9: // Black queen
+                    return new Queen(x, y, false);
+                case 10: // White queen
+                    return new Queen(x, y, true);
+                case 11: // Black king
+                    return new King(x, y, false);
+                case 12: // White king
+                    return new King(x, y, true);
+                
+            }
+
+            // In case an invalid Id is passed as a parameter
+            throw new InvalidOperationException("Tried to create a piece object from an invalid Id.");
+        }
+
+        // Takes a board configuration and returns a list of pieces
+        public List<Piece> ToListOfPieces()
+        {
+            List<Piece> pieces = new List<Piece>();
+
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    pieces.Add(PieceFromId(x, y, BoardConfiguration[y, x]));
+                }
+            }
+
+            return pieces;
+        }
+        
+
         public void Show()
         {
             for (int y = 0; y < BoardConfiguration.GetLength(0); y++)
